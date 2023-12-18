@@ -1,8 +1,26 @@
 <script setup>
 import { ref } from 'vue'
+import { onMounted } from 'vue'
+
+
+let selectedIndex = ref(0);
+let tabs =([]);
+
+onMounted( function(){ 
+  console.log({$children})
+  console.log({this:this})
+  //tabs = this.$children
+})
 
 defineProps({
-  msg: String,
+  // selectedIndex: {
+  //     type: Number,
+  //     default: 'Tab'
+  //   },
+  // tabs: {
+  //     type: Array,
+  //     default: []
+  //   },
 })
 
 const selectTab = function(e){
@@ -43,23 +61,18 @@ controlRoot.querySelector(`.vt-tabs__content :nth-child(${targetIndex+1})`).clas
 
 <div class="vt-tabs">
   <div class="vt-tabs__header" @click="selectTab">
-    <div class="vt-tabs__tab vt-tabs__tab--active">
-        Ficha 1
-    </div>
-    <div class="vt-tabs__tab">
-        Ficha 2
-    </div>
-    <div class="vt-tabs__tab">
-        Ficha 3
-    </div>
+    
+    <div class="vt-tabs__tab vt-tabs__tab--active"
+      v-for="tab in tabs" :key="tab.title">{{ tab.title }}:OK</div>
+
   </div>
   <div class="vt-tabs__content">
+
+
     <slot name="tab-body" class="vt-tabs__body vt-tabs__body--active"></slot>
   </div>
 
 </div>
-
-
 
 <!-- EJEMPLO: 
 
