@@ -7,22 +7,10 @@ import VtTab from './components/Vt-Tab.vue'
 <template>
   
   <VtTabs style="height: 400px; width: 520px;">
-    <VtTab title="OK">Contenido 1<br>Primero</VtTab>
-    <!-- <template #tab-body3>Contenido 2<br><br><br>Tercero</template>
-    <template #tab-body3>Contenido 3<br><br><br>Tercero</template> -->
-
+    <VtTab title="OK" :active="true" >Contenido 1<br>Primero</VtTab>
+    <VtTab title="NO Activa" >Contenido 2: *segundo*</VtTab>
+    <VtTab title="Otra" >Contenido 3: <i>Última!</i></VtTab>
   </VtTabs>
-  
-  
-    <!-- <div class="vt-tabs__tab vt-tabs__tab--active">
-        Ficha 1
-    </div>
-    <div class="vt-tabs__tab">
-        Ficha 2
-    </div>
-    <div class="vt-tabs__tab">
-        Ficha 3
-    </div> -->
 
 </template>
 

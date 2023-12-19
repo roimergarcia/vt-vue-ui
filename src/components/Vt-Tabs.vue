@@ -1,16 +1,13 @@
 <script setup>
 import { ref } from 'vue'
 import { onMounted } from 'vue'
+import VtTab from './Vt-Tab.vue'
 
+onMounted(function(){ 
+  console.log({this:this})
+});
 
 let selectedIndex = ref(0);
-let tabs =([]);
-
-onMounted( function(){ 
-  console.log({$children})
-  console.log({this:this})
-  //tabs = this.$children
-})
 
 defineProps({
   // selectedIndex: {
@@ -61,18 +58,25 @@ controlRoot.querySelector(`.vt-tabs__content :nth-child(${targetIndex+1})`).clas
 
 <div class="vt-tabs">
   <div class="vt-tabs__header" @click="selectTab">
-    
-    <div class="vt-tabs__tab vt-tabs__tab--active"
-      v-for="tab in tabs" :key="tab.title">{{ tab.title }}:OK</div>
+    {{ console.log({th:this}) }} 
+    <template v-for="(tab, index) in $slots.default()" :key="index">
+      <!-- {{ console.log({t:$slots.default()}) }} -->
+      {{ console.log({tab}) }}
+      <div
+        :class="['vt-tabs__tab', tab.props.active ? 'vt-tabs__tab--active': '']"
+        :data-index="index"
+        >{{ tab.props.title }}</div>
+
+    </template>
 
   </div>
   <div class="vt-tabs__content">
 
-
-    <slot name="tab-body" class="vt-tabs__body vt-tabs__body--active"></slot>
+   <slot></slot> 
   </div>
 
 </div>
+</template>
 
 <!-- EJEMPLO: 
 
@@ -99,9 +103,8 @@ controlRoot.querySelector(`.vt-tabs__content :nth-child(${targetIndex+1})`).clas
   </p>
   <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
   -->
-</template>
 
-<style scoped>
+<style >
 .vt-tabs{
   --vt-border-color-def: #aaa;
   --vt-border-radius-def: 4px;
@@ -129,14 +132,26 @@ controlRoot.querySelector(`.vt-tabs__content :nth-child(${targetIndex+1})`).clas
   border-color: var(--vt-border-color, var(--vt-border-color-def));
   border-style: solid solid solid solid;
   border-radius: var(--vt-border-radius, var(--vt-border-radius-def)) var(--vt-border-radius, var(--vt-border-radius-def)) 0 0;
-  
+  cursor: pointer;
+
   &.vt-tabs__tab--active{
+    position: relative;
     border-bottom-color: #FFF;
     z-index: 1;
   }
 
+  &.vt-tabs__tab--active::before{
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-top: 3px solid #F80;
+  }
+
   &:hover {
-    background-color: lightcoral;      
+    background-color: #ddd;      
   }
 
 }
