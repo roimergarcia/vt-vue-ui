@@ -6,10 +6,10 @@ import VtTab from './components/Vt-Tab.vue'
 
 <template>
   
-  <VtTabs style="height: 400px; width: 520px;">
-    <VtTab title="OK" :active="true" >Contenido 1<br>Primero</VtTab>
+  <VtTabs style="height: 400px; width: 520px;" :activeIndex="0">
+    <VtTab title="OK">Contenido 1<br>Primero</VtTab>
     <VtTab title="NO Activa" >Contenido 2: *segundo*</VtTab>
-    <VtTab title="Otra" >Contenido 3: <i>Última!</i></VtTab>
+    <VtTab title="Otra">Contenido 3: <i>Última!</i></VtTab>
   </VtTabs>
 
 </template>

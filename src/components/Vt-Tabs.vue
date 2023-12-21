@@ -1,78 +1,45 @@
 <script setup>
 import { ref } from 'vue'
-import { onMounted } from 'vue'
-import VtTab from './Vt-Tab.vue'
 
-onMounted(function(){ 
-  console.log({this:this})
-});
 
-let selectedIndex = ref(0);
-
-defineProps({
-  // selectedIndex: {
-  //     type: Number,
-  //     default: 'Tab'
-  //   },
-  // tabs: {
-  //     type: Array,
-  //     default: []
-  //   },
+const props = defineProps({
+  activeIndex: {
+       type: Number,
+       default: 0
+     },
 })
 
-const selectTab = function(e){
+let currentIndex = ref(props.activeIndex)//
 
-/**
- * @type {HTMLElement} html element
- */
-const targetTab = e.target;
-
-//Only continue if current is not already selected
-if(!targetTab.classList.contains('vt-tabs__tab') || targetTab.classList.contains('vt-tabs__tab--active')){
-  return
+const selectTab = function(index){
+  currentIndex.value = index;
 }
-
-//only continue if content tab is present
-const targetIndex = [...targetTab.parentElement.children].indexOf(targetTab);
-if (targetIndex < 0){
-  return
-}
-
-for (const tab of document.querySelectorAll('.vt-tabs__tab--active')) {
-  tab.classList.remove('vt-tabs__tab--active')
-}
-//shows current header
-targetTab.classList.add('vt-tabs__tab--active')
-
-//shows current content
-const controlRoot = targetTab.closest('.vt-tabs');
-controlRoot.querySelector('.vt-tabs__body--active').classList.remove('vt-tabs__body--active')
-controlRoot.querySelector(`.vt-tabs__content :nth-child(${targetIndex+1})`).classList.add('vt-tabs__body--active')
-
-}
-
 
 </script>
 
 <template>
-
 <div class="vt-tabs">
-  <div class="vt-tabs__header" @click="selectTab">
-    {{ console.log({th:this}) }} 
-    <template v-for="(tab, index) in $slots.default()" :key="index">
-      <!-- {{ console.log({t:$slots.default()}) }} -->
-      {{ console.log({tab}) }}
+  <div class="vt-tabs__header">
+    
+    <template 
+      v-for="(tab, index) in $slots.default()" 
+      :key="index">
+      
       <div
-        :class="['vt-tabs__tab', tab.props.active ? 'vt-tabs__tab--active': '']"
+        :class="['vt-tabs__tab', (currentIndex === index) ? 'vt-tabs__tab--active': '']"
         :data-index="index"
-        >{{ tab.props.title }}</div>
-
+        @click="()=>{selectTab(index)}"
+        >{{ tab.props.title }} </div>
+      
     </template>
 
   </div>
   <div class="vt-tabs__content">
 
-   <slot></slot> 
+    <template v-for="(tab, index) in $slots.default()">
+      <component :is="tab" :active="currentIndex === index" :index="index"></component>
+    </template>
+
   </div>
 
 </div>
