@@ -45,46 +45,18 @@ const selectTab = function(index){
 </div>
 </template>
 
-<!-- EJEMPLO: 
-
-  <h1>{{ msg }}</h1>
-
-  <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
-    <p>
-      Edit
-      <code>components/HelloWorld.vue</code> to test HMR
-    </p>
-  </div>
-
-  <p>
-    Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
-  </p>
-  <p>
-    Install
-    <a href="https://github.com/vuejs/language-tools" target="_blank">Volar</a>
-    in your IDE for a better DX
-  </p>
-  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
-  -->
-
 <style >
+@import '../assets/global.css';
+
 .vt-tabs{
-  --vt-border-color-def: #aaa;
-  --vt-border-radius-def: 4px;
   display: flex;
   flex-direction: column;
-  background-color: #FFF;
 }
 .vt-tabs__header{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   flex: 0 0 auto;
-  background-color: #FFF;
 }
 .vt-tabs__content{
   flex: 1 1 100%;
@@ -96,14 +68,15 @@ const selectTab = function(index){
   padding: 2px 0.5em;
   margin-right: 2px;
   border-width: 1px;
-  border-color: var(--vt-border-color, var(--vt-border-color-def));
+  border-color: var(--vt-border-color);
   border-style: solid solid solid solid;
-  border-radius: var(--vt-border-radius, var(--vt-border-radius-def)) var(--vt-border-radius, var(--vt-border-radius-def)) 0 0;
+  border-radius: var(--vt-border-radius) var(--vt-border-radius) 0 0;
+  background-color: var(--vt-bg-color);
   cursor: pointer;
 
   &.vt-tabs__tab--active{
     position: relative;
-    border-bottom-color: #FFF;
+    border-bottom-color: var(--vt-bg-color);
     z-index: 1;
   }
 
@@ -114,11 +87,13 @@ const selectTab = function(index){
     top: 0;
     left: 0;
     width: 100%;
-    border-top: 3px solid #F80;
+    border-top: 3px solid var(--vt-accent-color);
+    border-radius: 4px 4px 0 0;
   }
 
   &:hover {
-    background-color: #ddd;      
+    color: var(--vt-hover-color);
+    background-color: var(--vt-hover-bg-color);
   }
 
 }
@@ -126,8 +101,9 @@ const selectTab = function(index){
   /* CONTENT */
   .vt-tabs__content{
     margin-top: -1px;
-    border: 1px solid var(--vt-border-color, var(--vt-border-color-def));
-    border-radius: 0 0 var(--vt-border-radius, var(--vt-border-radius-def)) var(--vt-border-radius, var(--vt-border-radius-def));
+    background-color: var(--vt-bg-color);
+    border: 1px solid var(--vt-border-color);
+    border-radius: 0 0 var(--vt-border-radius) var(--vt-border-radius);
   }
   
   .vt-tabs__body{

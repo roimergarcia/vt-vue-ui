@@ -1,0 +1,12 @@
+:root {
+    /* details */
+    --vt-accent-color: #F80;
+    --vt-hover-color: #F80;
+    --vt-hover-bg-color: #ddd;
+    /* borders */
+    --vt-border-color: #aaa;
+    --vt-border-radius: 4px;
+    /* backgrounds */
+    --vt-bg-color: #EEE;
+}
+  
