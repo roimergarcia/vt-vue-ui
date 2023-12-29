@@ -1,49 +1,35 @@
 <script setup>
-import { defineProps, defineEmits, ref } from 'vue';
+import { defineProps, defineEmits, ref, reactive } from 'vue';
 
 const listSize = 16;
-const props = defineProps({
-    modelValue: {
-        type: Object,
-        default: []
-    }
-})
+ const props = defineProps(['modelValue'])
 
-const allItems = ref(props.modelValue, [])
+// const props2 = defineProps({
+//     modelValue: {
+//         type: Array,
+//         default: []
+//     }
+// })
+
 const emit = defineEmits(['update:modelValue'])
+const allItems = ref(props.modelValue)
 
-const addAll = function(){
-    console.log({allItems})
+const updateAll = function(asSelected){
+    console.log({a:allItems.value})
     let notify = false
     allItems.value.forEach((element ) => { 
         
-        if (!element.select){
-            element.select = true
+        if (element.selected !== asSelected){
+            element.selected = asSelected
             notify = true
         }
     });
 
     if (notify) {
-        emit('update:modelValue')
+        emit('update:modelValue', allItems.value);
     }
     
 }
-
-const removeAll = function(){
-    let notify = false
-    allItems.value.forEach(element => {
-        if (element.select){
-            element.select = false
-            notify = true
-        }
-    });
-
-    if (notify) {
-        emit('update:modelValue')
-    }
-    
-}
-
 </script>
 
 <template>
@@ -68,11 +54,15 @@ const removeAll = function(){
         <button 
             class="vt-double-list__add-all" 
             title="Add all"
-            @click="addAll()"
+            @click="updateAll(true)"
             >&Rarr;</button>
         <!-- <button class="vt-double-list__add" title="Add">&rarr;</button> -->
-        <button class="vt-double-list__remove" title="Remove">&larr;</button>
-        <!-- <button class="vt-double-list__remove-all" title="Remove all">&Larr;</button> -->
+        <!-- <button class="vt-double-list__remove" title="Remove">&larr;</button>-->
+        <button 
+            class="vt-double-list__remove-all" 
+            title="Remove all"
+            @click="updateAll(false)"
+            >&Larr;</button> 
     </div>
     
     <select class="vt-double-list__selected" :size="listSize">

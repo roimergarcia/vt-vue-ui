@@ -21,7 +21,7 @@ const allItems=[
 
 <template>
   
-  <VtTabs style="height: 600px; width: auto;" :activeIndex="0">
+  <VtTabs style="height: 420px; width: auto;" :activeIndex="0">
 
     <VtTab title="Double List">
 
