@@ -10,12 +10,18 @@ class vtDoubleListItem {
         return { text, value, selected }
     }
 }
+
 const allItems=[
   new vtDoubleListItem('Fresh Apples', 'apple', false),
   new vtDoubleListItem('Bananas', 'banana', true),
   new vtDoubleListItem('Lemons', 'lemon', false),
   new vtDoubleListItem('Wacamole', 'advocado', false),
   new vtDoubleListItem('Strawberry Pie', 'strawberry', true),
+  new vtDoubleListItem('Chocolate bar', 'choco-bar', true),
+  new vtDoubleListItem('Chocolate Cake', 'choco-cake', false),
+  new vtDoubleListItem('Strawberry Ice Cream', 'strawberry-ic', false),
+  new vtDoubleListItem('Apple', 'fresh-apple', false),
+  new vtDoubleListItem('Apple Pie', 'apple-pie', true),
 ]
 </script>
 
@@ -26,7 +32,7 @@ const allItems=[
     <VtTab title="Double List">
 
       <h2>vtDoubleList</h2>
-      <VtDoubleList v-model="allItems"></vtDoubleList>
+      <VtDoubleList v-model="allItems" style="height: 120px;"></vtDoubleList>
 
     </VtTab>
 

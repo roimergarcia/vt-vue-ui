@@ -1,21 +1,18 @@
 <script setup>
-import { defineProps, defineEmits, ref, reactive } from 'vue';
+import { defineEmits, ref } from 'vue';
 
-const listSize = 16;
- const props = defineProps(['modelValue'])
-
-// const props2 = defineProps({
-//     modelValue: {
-//         type: Array,
-//         default: []
-//     }
-// })
+const props = defineProps({
+    modelValue: {
+        type: Array,
+        default: []
+    }
+})
 
 const emit = defineEmits(['update:modelValue'])
 const allItems = ref(props.modelValue)
 
 const updateAll = function(asSelected){
-    console.log({a:allItems.value})
+    
     let notify = false
     allItems.value.forEach((element ) => { 
         
@@ -35,20 +32,19 @@ const updateAll = function(asSelected){
 <template>
 <div class="vt-double-list">
 
-    <select class="vt-double-list__available" :size="listSize">
+    <div class="vt-double-list__available" >
         <template 
             v-for="item in allItems" 
             :key="item.modelValue">
 
-        <option 
+        <div
             v-show="!item.selected"
-            :value="item.value"
+            :data-value="item.value"
             @click="item.selected = true"
-        >{{ item.text }}
-        </option>
+            >{{ item.text }}</div>
 
-        </template>
-    </select>
+        </template>        
+    </div>
 
     <div class="vt-double-list__actions">
         <button 
@@ -56,8 +52,6 @@ const updateAll = function(asSelected){
             title="Add all"
             @click="updateAll(true)"
             >&Rarr;</button>
-        <!-- <button class="vt-double-list__add" title="Add">&rarr;</button> -->
-        <!-- <button class="vt-double-list__remove" title="Remove">&larr;</button>-->
         <button 
             class="vt-double-list__remove-all" 
             title="Remove all"
@@ -65,20 +59,19 @@ const updateAll = function(asSelected){
             >&Larr;</button> 
     </div>
     
-    <select class="vt-double-list__selected" :size="listSize">
+    <div class="vt-double-list__selected" >
         <template 
             v-for="item in allItems" 
             :key="item.modelValue">
 
-        <option 
+        <div
             v-show="item.selected"
-            :value="item.value"
+            :data-value="item.value"
             @click="item.selected = false"
-        >{{ item.text }}
-        </option>
+            >{{ item.text }}</div>
 
-        </template>
-    </select>
+        </template>        
+    </div>
 
 </div>
 </template>
@@ -94,6 +87,15 @@ const updateAll = function(asSelected){
 .vt-double-list .vt-double-list__available,
 .vt-double-list .vt-double-list__selected {
     flex: 1 1 100%;
+    border: 1px solid var(--vt-border-color);
+    overflow-y: auto;
+    & > div {
+        cursor: pointer;
+        padding: 0 0.2em;
+        &:hover {
+            background-color: var(--vt-hover-bg-color);
+        }
+    }
 }
 .vt-double-list__actions{
     display: flex;
