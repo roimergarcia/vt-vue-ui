@@ -1,5 +1,7 @@
 <script setup>
 import { defineEmits, ref } from 'vue';
+import IconAllRight from '~icons/mdi/arrow-collapse-right'
+import IconAllLeft from '~icons/mdi/arrow-collapse-left'
 
 const props = defineProps({
     modelValue: {
@@ -51,12 +53,12 @@ const updateAll = function(asSelected){
             class="vt-double-list__add-all" 
             title="Add all"
             @click="updateAll(true)"
-            >&Rarr;</button>
+            ><IconAllRight /></button>
         <button 
             class="vt-double-list__remove-all" 
             title="Remove all"
             @click="updateAll(false)"
-            >&Larr;</button> 
+            ><IconAllLeft /></button>
     </div>
     
     <div class="vt-double-list__selected" >
