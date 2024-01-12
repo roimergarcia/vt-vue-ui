@@ -1,27 +1,41 @@
 <script setup>
-import VtTabs from './components/Vt-Tabs.vue';
-import VtTab from './components/Vt-Tab.vue'
-import VtDoubleList from './components/VtDoubleList.vue'
+import VtTabs from './components/VtTabs.vue';
+import VtTab from './components/VtTab.vue';
+import VtListItem from './components/VtListItem.js';
+import VtDoubleList from './components/VtDoubleList.vue';
+import VtMultiselect from './components/vtMultiselect.vue';
 
-import vtListItem from './components/vtListItem'
 
 const allItems=[
-  new vtListItem('Fresh Apples', 'apple', false),
-  new vtListItem('Bananas', 'banana', true),
-  new vtListItem('Lemons', 'lemon', false),
-  new vtListItem('Wacamole', 'advocado', false),
-  new vtListItem('Strawberry Pie', 'strawberry', true),
-  new vtListItem('Chocolate bar', 'choco-bar', true),
-  new vtListItem('Chocolate Cake', 'choco-cake', false),
-  new vtListItem('Strawberry Ice Cream', 'strawberry-ic', false),
-  new vtListItem('Apple', 'fresh-apple', false),
-  new vtListItem('Apple Pie', 'apple-pie', true),
+  new VtListItem('Fresh Apples', 'apple', false),
+  new VtListItem('Bananas', 'banana', true),
+  new VtListItem('Lemons', 'lemon', false),
+  new VtListItem('Wacamole', 'advocado', false),
+  new VtListItem('Strawberry Pie', 'strawberry', true),
+  new VtListItem('Chocolate bar', 'choco-bar', true),
+  new VtListItem('Chocolate Cake', 'choco-cake', false),
+  new VtListItem('Strawberry Ice Cream', 'strawberry-ic', false),
+  new VtListItem('Apple', 'fresh-apple', false),
+  new VtListItem('Apple Pie', 'apple-pie', true),
+]
+
+const allMultiItems=[
+  new VtListItem('Fresh Apples', 'apple', false),
+  new VtListItem('Bananas', 'banana', true),
+  new VtListItem('Lemons', 'lemon', false),
+  new VtListItem('Wacamole', 'advocado', false),
+  new VtListItem('Strawberry Pie', 'strawberry', true),
+  new VtListItem('Chocolate bar', 'choco-bar', true),
+  new VtListItem('Chocolate Cake', 'choco-cake', false),
+  new VtListItem('Strawberry Ice Cream', 'strawberry-ic', false),
+  new VtListItem('Apple', 'fresh-apple', false),
+  new VtListItem('Apple Pie', 'apple-pie', true),
 ]
 </script>
 
 <template>
   
-  <VtTabs style="height: 420px; width: auto;" :activeIndex="0">
+  <VtTabs style="height: 420px; width: auto;" :activeIndex="1">
 
     <VtTab title="Double List">
 
@@ -30,7 +44,13 @@ const allItems=[
 
     </VtTab>
 
-    <VtTab title="NO Activa" >Contenido 2: *segundo*</VtTab>
+    <VtTab title="Multi Select" >
+
+      <h2>vtMultiselect</h2>
+      <VtMultiselect v-model="allItems" />
+
+    </VtTab>
+
     <VtTab title="Otra">Contenido 3: <i>Última!</i></VtTab>
   </VtTabs>
 

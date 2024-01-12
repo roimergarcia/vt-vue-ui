@@ -1,7 +1,8 @@
 
-import VtTabs from './components/Vt-Tabs.vue';
-import VtTab from './components/Vt-Tab.vue'
-import VtDoubleList from './components/vtDoubleList'
-import vtListItem from './components/vtListItem'
+import VtTabs from './components/VtTabs.vue';
+import VtTab from './components/VtTab.vue';
+import VtListItem from './components/VtListItem.js';
+import VtDoubleList from './components/VtDoubleList.vue';
+import VtMultiselect from './components/vtMultiselect.vue';
 
-export { VtTab, VtTabs, VtDoubleList, vtListItem}
+export { VtTab, VtTabs, VtDoubleList, VtListItem}

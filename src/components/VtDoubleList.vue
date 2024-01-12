@@ -45,7 +45,7 @@ const updateAll = function(asSelected){
             @click="item.selected = true"
             >{{ item.text }}</div>
 
-        </template>        
+        </template>
     </div>
 
     <div class="vt-double-list__actions">
