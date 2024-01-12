@@ -3,25 +3,19 @@ import VtTabs from './components/Vt-Tabs.vue';
 import VtTab from './components/Vt-Tab.vue'
 import VtDoubleList from './components/VtDoubleList.vue'
 
-
-//vtDoubleList: 
-class vtDoubleListItem {
-    constructor ( text, value, selected){
-        return { text, value, selected }
-    }
-}
+import vtListItem from './components/vtListItem'
 
 const allItems=[
-  new vtDoubleListItem('Fresh Apples', 'apple', false),
-  new vtDoubleListItem('Bananas', 'banana', true),
-  new vtDoubleListItem('Lemons', 'lemon', false),
-  new vtDoubleListItem('Wacamole', 'advocado', false),
-  new vtDoubleListItem('Strawberry Pie', 'strawberry', true),
-  new vtDoubleListItem('Chocolate bar', 'choco-bar', true),
-  new vtDoubleListItem('Chocolate Cake', 'choco-cake', false),
-  new vtDoubleListItem('Strawberry Ice Cream', 'strawberry-ic', false),
-  new vtDoubleListItem('Apple', 'fresh-apple', false),
-  new vtDoubleListItem('Apple Pie', 'apple-pie', true),
+  new vtListItem('Fresh Apples', 'apple', false),
+  new vtListItem('Bananas', 'banana', true),
+  new vtListItem('Lemons', 'lemon', false),
+  new vtListItem('Wacamole', 'advocado', false),
+  new vtListItem('Strawberry Pie', 'strawberry', true),
+  new vtListItem('Chocolate bar', 'choco-bar', true),
+  new vtListItem('Chocolate Cake', 'choco-cake', false),
+  new vtListItem('Strawberry Ice Cream', 'strawberry-ic', false),
+  new vtListItem('Apple', 'fresh-apple', false),
+  new vtListItem('Apple Pie', 'apple-pie', true),
 ]
 </script>
 
