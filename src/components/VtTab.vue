@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue'
 
-const thisTab = ref();
 defineProps({
     title: {
       type: String,
