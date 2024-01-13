@@ -5,7 +5,7 @@ import VtListItem from './components/VtListItem.js';
 import VtDoubleList from './components/VtDoubleList.vue';
 import VtMultiselect from './components/vtMultiselect.vue';
 
-
+ 
 const allItems=[
   new VtListItem('Fresh Apples', 'apple', false),
   new VtListItem('Bananas', 'banana', true),
@@ -47,7 +47,7 @@ const allMultiItems=[
     <VtTab title="Multi Select" >
 
       <h2>vtMultiselect</h2>
-      <VtMultiselect v-model="allItems" />
+      <VtMultiselect v-model="allItems" style="width: 300px;"/>
 
     </VtTab>
 

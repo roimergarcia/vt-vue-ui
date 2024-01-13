@@ -26,6 +26,7 @@ const selectTab = function(index){
       :key="index">
       
       <div
+        tabindex="0"
         :class="['vt-tabs__tab', (currentIndex === index) ? 'vt-tabs__tab--active': '']"
         :data-index="index"
         @click="()=>{selectTab(index)}"
