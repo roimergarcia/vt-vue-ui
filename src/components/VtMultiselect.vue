@@ -40,7 +40,7 @@ const isOpen = ref(false);
         position: relative;
         border: 1px solid var(--vt-border-color);
         border-radius: var(--vt-border-radius);
-        :focus{
+        &:focus-within{
             outline: 1px solid blue; outline-offset: 1px;
         }
 
@@ -50,7 +50,6 @@ const isOpen = ref(false);
             flex: 1 1 auto;
             overflow: hidden;
             padding: 0.2rem;
-            height: 1.6rem;
         }
         .vt-multiselect__item-selected{
             display: inline-block;
@@ -58,6 +57,7 @@ const isOpen = ref(false);
             padding: 0 0.2rem;
             border: 1px solid var(--vt-accent-color);
             border-radius: var(--vt-border-radius);
+            height: 1.5em;
         }
 
         .vt-multiselect__chevron {
@@ -65,10 +65,15 @@ const isOpen = ref(false);
             align-content: center;
             justify-content: center;
             font-size: 1.2em;
-            flex: 0 0 30px;
+            flex: 0 0 24px;
             border-left: 1px solid var(--vt-border-color);
+            border-radius: 0 var(--vt-border-radius)  var(--vt-border-radius) 0;
             cursor: pointer;
+            &:hover{
+                background-color: var(--vt-hover-bg-color);
+            }  
         }
+
     }
     
 </style>
