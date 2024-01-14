@@ -47,7 +47,7 @@ const allMultiItems=[
     <VtTab title="Multi Select" >
 
       <h2>vtMultiselect</h2>
-      <VtMultiselect v-model="allItems" style="width: 300px;"/>
+      <VtMultiselect v-model="allItems" style="width: 400px;"/>
 
     </VtTab>
 
