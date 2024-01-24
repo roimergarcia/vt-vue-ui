@@ -4,6 +4,7 @@ import VtTab from './components/VtTab.vue';
 import VtListItem from './components/VtListItem.js';
 import VtDoubleList from './components/VtDoubleList.vue';
 import VtMultiselect from './components/vtMultiselect.vue';
+import vtAudioRecorder from './components/VtAudioRecorder.vue';
 
  
 const allItems=[
@@ -31,11 +32,13 @@ const allMultiItems=[
   new VtListItem('Apple', 'fresh-apple', false),
   new VtListItem('Apple Pie', 'apple-pie', true),
 ]
+const allAudio = null;
+
 </script>
 
 <template>
   
-  <VtTabs style="height: 420px; width: auto;" :activeIndex="1">
+  <VtTabs style="height: 420px; width: auto;" :activeIndex="2">
 
     <VtTab title="Double List">
 
@@ -51,7 +54,10 @@ const allMultiItems=[
 
     </VtTab>
 
-    <VtTab title="Otra">Contenido 3: <i>Última!</i></VtTab>
+    <VtTab title="Audio Recorder">
+      <h2>vtAudioRecorder</h2>
+      <vtAudioRecorder v-model="allAudio"></vtAudioRecorder>
+    </VtTab>
   </VtTabs>
 
 </template>
