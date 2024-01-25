@@ -15,7 +15,8 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue'])
 const audioFile = ref(props.modelValue)
-const audioElement = ref(null)
+const audioUrl = ref('')
+const audioElement = ref('null')
 
 const isRecording = ref(false);
 const isPlaying = ref(false);
@@ -40,7 +41,7 @@ const starRecord = async function(e){
     
     await getRecorder(); 
     if(!!mediaRecorder){
-        mediaRecorder.start(1000);
+        mediaRecorder.start(500);
         isRecording.value = true;
     }
     
@@ -53,7 +54,6 @@ const startPlay = function(e){
 
 const stop = async function(e){
 
-    await getRecorder()
     if(!!mediaRecorder){
         if(isRecording.value){
             stopRecord(e);
@@ -65,34 +65,36 @@ const stop = async function(e){
 
 const stopRecord = function(e){
     console.log('stopRecord')
-
+    //console.log({mediaRecorder, s:mediaRecorder.state, t:mediaRecorder.stream})
+    
+    
+    mediaRecorder.requestData();
+    mediaRecorder.stream.getTracks().forEach( track => track.stop() ); // stop each of them
     mediaRecorder.stop();
-    mediaRecorder.stream
-        .getTracks() // get all tracks from the MediaStream
-        .forEach( track => track.stop() ); // stop each of them
-    const audioContext = new AudioContext()
-    audioContext.close
-    const microphone = audioContext.createMediaStreamSource(mediaRecorder.stream)
-    microphone.disconnect
+
+    console.log({audioParts})
 
 
     
-    const blob = new Blob(audioParts, { type: "audio/ogg; codecs=opus" });
+    const blob = new Blob(audioParts, { type: "audio/webm; codecs=opus" });
     audioParts = []
 
     audioFile.value = blob;
     isRecording.value = false;
-
-    URL.revokeObjectURL(audioElement.src);
-    audioElement.src = window.URL.createObjectURL(blob);
-    console.log({blob})
+    
+     
+    if(!!audioUrl){
+        URL.revokeObjectURL(audioUrl.value);
+    }
+    audioUrl.value = window.URL.createObjectURL(blob);
+    console.log({audioUrl:audioUrl.value}) 
 
 } 
 
 const stopPlay = function(e){
     console.log('stopPlay')
     
-    audioElement.stop()
+    audioElement.value.stop()
 } 
 const deleteAudio = function(e){
     console.log('deleteAudio')
@@ -106,7 +108,7 @@ const deleteAudio = function(e){
  * Ensures that a MediaRecorder is available.
  */
 const getRecorder = async function (){
-    //if (!!mediaRecorder) return true;
+    //if(!!mediaRecorder) return true;
 
   await navigator.mediaDevices.getUserMedia({ audio: true})
     .then((stream) => {
@@ -145,8 +147,8 @@ const getRecorder = async function (){
         :disabled="isRecording || isPlaying || !hasAudioFile"
         @click="deleteAudio($event)"><IconDelete /></button>
 
-    <video v-if="hasAudioFile" 
-        controls
+    <video v-show="hasAudioFile" 
+        controls :src="audioUrl"
         ref="audioElement"></video>
 
 </div>
