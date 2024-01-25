@@ -6,17 +6,20 @@ import IconPlay from '~icons/mdi/play-box-outline'
 import IconStop from '~icons/mdi/stop-circle-outline'
 import IconDelete from '~icons/mdi/delete-circle-outline'
 
+//Properties
 const props = defineProps({
     modelValue: {
         type: Blob,
         default: null
     }   
 })
-
 const emit = defineEmits(['update:modelValue'])
 const audioFile = ref(props.modelValue)
-const audioUrl = ref('')
-const audioElement = ref('null')
+
+//Control and data variables
+const audioUrl = ref('');
+const audioElement = ref('null');
+const audioFileName = ref('');
 
 const isRecording = ref(false);
 const isPlaying = ref(false);
@@ -28,15 +31,13 @@ const hasAudioFile = computed(()=> {
     return (typeof file.stream === 'function');
 })
 
-
 let mediaRecorder = null;
 let audioParts = [];
 
+
+
 //main functions 
 const starRecord = async function(e){
-    console.log('starRecord');
-
-
     audioParts = []
     
     await getRecorder(); 
@@ -64,22 +65,26 @@ const stop = async function(e){
 } 
 
 const stopRecord = function(e){
-    console.log('stopRecord')
-    //console.log({mediaRecorder, s:mediaRecorder.state, t:mediaRecorder.stream})
     
-    
+    //Stopt recording (needs to be done in all tracks)
     mediaRecorder.requestData();
     mediaRecorder.stream.getTracks().forEach( track => track.stop() ); // stop each of them
     mediaRecorder.stop();
 
-    console.log({audioParts})
-
-
-    
-    const blob = new Blob(audioParts, { type: "audio/webm; codecs=opus" });
+    //The blobs inherits the mimetype already chosen by the browser
+    const mimeType = mediaRecorder.mimeType;
+    const blob = new Blob(audioParts, { type: mimeType });
     audioParts = []
 
     audioFile.value = blob;
+    const extension = mimeType.startsWith('audio/aac') ? 'aac':
+                      mimeType.startsWith('audio/mpeg') ? 'mp3':
+                      mimeType.startsWith('audio/ogg') ? 'ogg':
+                      mimeType.startsWith('audio/opus') ? 'opus':
+                      mimeType.startsWith('audio/wav') ? 'wav':
+                      mimeType.startsWith('audio/webm') ? 'weba':
+                      'audio';
+    audioFileName.value = 'recording-' + (new Date()).format('yyyy-MM-dd_HH:mm') + extension;
     isRecording.value = false;
     
      
@@ -150,7 +155,9 @@ const getRecorder = async function (){
     <video v-show="hasAudioFile" 
         controls :src="audioUrl"
         ref="audioElement"></video>
-
+    <span v-show="hasAudioFile" >
+        {{ audioFileName }}
+    </span>
 </div>
 
 
