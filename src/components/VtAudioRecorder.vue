@@ -2,7 +2,6 @@
 
 import { computed, ref } from 'vue';
 import IconRecord from '~icons/mdi/record-circle'
-import IconPlay from '~icons/mdi/play-box-outline'
 import IconStop from '~icons/mdi/stop-circle-outline'
 import IconDelete from '~icons/mdi/delete-circle-outline'
 
@@ -22,7 +21,6 @@ const audioElement = ref('null');
 const audioFileName = ref('');
 
 const isRecording = ref(false);
-const isPlaying = ref(false);
 const hasAudioFile = computed(()=> {
     const file = audioFile.value;
 
@@ -39,7 +37,7 @@ let dateFormatOpt = {
   month: "2-digit",
   day: "2-digit",
   hour:'2-digit',
-   minute:'2-digit'
+  minute:'2-digit'
 }; 
 
 //main functions 
@@ -57,17 +55,6 @@ const starRecord = async function(e){
 const startPlay = function(e){
     console.log('startPlay')
     
-} 
-
-const stop = async function(e){
-
-    if(!!mediaRecorder){
-        if(isRecording.value){
-            stopRecord(e);
-        } else if(isPlaying.value){
-            stopPlay(e);
-        }
-    }
 } 
 
 const stopRecord = function(e){
@@ -104,11 +91,6 @@ const stopRecord = function(e){
 
 } 
 
-const stopPlay = function(e){
-    console.log('stopPlay')
-    
-    audioElement.value.stop()
-} 
 const deleteAudio = function(e){
     console.log('deleteAudio')
     
@@ -150,30 +132,26 @@ const getRecorder = async function (){
     <button class="vt-audio__button" 
         :class="{'vt-audio__button--on': isRecording}"
         :disabled="isRecording"
-        @click="starRecord($event)"><IconRecord /></button>
+        @click="starRecord($event)"><IconRecord /></button> 
 
     <button class="vt-audio__button" 
-        :class="{'vt-audio__button--on': isPlaying}"
-        :disabled="isPlaying"
-        @click="startPlay($event)"><IconPlay /></button>
-
-    <button class="vt-audio__button" 
-        :disabled="!(isRecording || isPlaying)"
-        @click="stop($event)"><IconStop /></button>
-
-    <button class="vt-audio__button" 
-        :class="{'vt-audio__button--on': isRecording}" 
-        :disabled="isRecording || isPlaying || !hasAudioFile"
+        :disabled="!isRecording"
+        @click="stopRecord($event)"><IconStop /></button>
+        
+    <button class="vt-audio__button"  
+        :disabled="isRecording  || !hasAudioFile"
         @click="deleteAudio($event)"><IconDelete /></button>
 
-    <video v-show="hasAudioFile" 
+    <audio v-show="hasAudioFile" 
+        class="vt-audio__player"
         controls :src="audioUrl"
-        ref="audioElement"></video>
-    <span v-show="hasAudioFile" >
+        ref="audioElement"></audio>
+
+    
+</div>
+<span v-show="hasAudioFile" >
         {{ audioFileName }}
     </span>
-</div>
-
 
 </template>
 
@@ -207,6 +185,9 @@ const getRecorder = async function (){
             opacity: 0.5;
             cursor: unset;
         }
+    }
+    .vt-audio__player{
+        height: 40px;
     }
 }
 </style>
