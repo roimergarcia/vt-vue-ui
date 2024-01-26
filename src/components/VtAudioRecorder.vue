@@ -3,6 +3,7 @@
 import { computed, ref } from 'vue';
 import IconRecord from '~icons/mdi/record-circle'
 import IconStop from '~icons/mdi/stop-circle-outline'
+import IconDownload from '~icons/mdi/download-outline'
 import IconDelete from '~icons/mdi/delete-circle-outline'
 
 //Properties
@@ -91,6 +92,23 @@ const stopRecord = function(e){
 
 } 
 
+const download = function(e){
+
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(audioFile.value);
+    link.download = audioFileName.value;
+
+    //Triggers the download by dispatching a clic event
+    link.dispatchEvent(
+      new MouseEvent('click', { 
+        bubbles: true, 
+        cancelable: true, 
+        view: window 
+      })
+    )
+
+}
+
 const deleteAudio = function(e){
     console.log('deleteAudio')
     
@@ -137,6 +155,11 @@ const getRecorder = async function (){
     <button class="vt-audio__button" 
         :disabled="!isRecording"
         @click="stopRecord($event)"><IconStop /></button>
+
+    <button class="vt-audio__button" 
+        :title="'Download file' + (hasAudioFile? (': '+ audioFileName):'')"
+        :disabled="!hasAudioFile"
+        @click="download($event)"><IconDownload /></button>
         
     <button class="vt-audio__button"  
         :disabled="isRecording  || !hasAudioFile"
@@ -149,9 +172,6 @@ const getRecorder = async function (){
 
     
 </div>
-<span v-show="hasAudioFile" >
-        {{ audioFileName }}
-    </span>
 
 </template>
 
