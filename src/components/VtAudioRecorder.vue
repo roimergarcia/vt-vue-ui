@@ -34,7 +34,13 @@ const hasAudioFile = computed(()=> {
 let mediaRecorder = null;
 let audioParts = [];
 
-
+let dateFormatOpt = {
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour:'2-digit',
+   minute:'2-digit'
+}; 
 
 //main functions 
 const starRecord = async function(e){
@@ -77,6 +83,7 @@ const stopRecord = function(e){
     audioParts = []
 
     audioFile.value = blob;
+    isRecording.value = false;
     const extension = mimeType.startsWith('audio/aac') ? 'aac':
                       mimeType.startsWith('audio/mpeg') ? 'mp3':
                       mimeType.startsWith('audio/ogg') ? 'ogg':
@@ -84,8 +91,9 @@ const stopRecord = function(e){
                       mimeType.startsWith('audio/wav') ? 'wav':
                       mimeType.startsWith('audio/webm') ? 'weba':
                       'audio';
-    audioFileName.value = 'recording-' + (new Date()).format('yyyy-MM-dd_HH:mm') + extension;
-    isRecording.value = false;
+    audioFileName.value = 'recording-' 
+                        + Intl.DateTimeFormat('bs', dateFormatOpt).format(new Date()).replace(/[: ]+/g, '-') //yyyy-MM-dd-HH-mm
+                        + '.' + extension;
     
      
     if(!!audioUrl){
@@ -103,7 +111,13 @@ const stopPlay = function(e){
 } 
 const deleteAudio = function(e){
     console.log('deleteAudio')
-    //mediaRecorder.stop();
+    
+    if(!!audioUrl){
+        URL.revokeObjectURL(audioUrl.value);
+    }
+
+    audioUrl.value = '';
+    audioFile.value = null;
 } 
 
 
