@@ -34,9 +34,13 @@
   "devDependencies": {
     "@iconify-json/mdi": "^1.1.64",
     "@vitejs/plugin-vue": "^4.5.2",
+    "standard": "^17.1.0",
     "unplugin-icons": "^0.18.1",
     "vite": "^5.0.8",
     "vite-plugin-mkcert": "^1.17.2",
     "vue": "^3.3.11"
+  },
+  "eslintConfig": {
+    "extends": "Standard"
   }
 }
