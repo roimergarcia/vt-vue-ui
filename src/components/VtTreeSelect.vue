@@ -41,7 +41,17 @@ const thisIsOpen = ref(props.isOpen);
               parent.classList.toggle('vt-TreeSelect__item--open')
               parent.classList.toggle('vt-TreeSelect__item--closed')
             }"></span>
-            <label><input type="checkbox" :cheched="item.selected" />{{ item.title }}</label>
+            <label><input type="checkbox" v-model="item.selected" @change='(e) => {
+              const thisItem = e.target;
+              const isSelected = thisItem.checked;
+              const allDescendants = thisItem.closest("li").querySelectorAll("ul > li input[type=\"checkbox\"]");
+
+              for (const descendant of allDescendants) {
+                if (descendant !== thisItem) {
+                  descendant.checked = isSelected
+                }
+              }
+            }' />{{ item.title }}</label>
           </div>
 
           <VtTreeSelect v-model="item.children" :isRoot="false"></VtTreeSelect>
@@ -50,7 +60,7 @@ const thisIsOpen = ref(props.isOpen);
       </template>
 
       <template v-else>
-        <li class="vt-TreeSelect__item" data-hijos="NO" :data-l="item.children">
+        <li class="vt-TreeSelect__item">
           <label>
             <input type="checkbox" :cheched="item.selected" />{{ item.title }}
           </label>
