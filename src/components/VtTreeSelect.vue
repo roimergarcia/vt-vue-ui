@@ -23,7 +23,6 @@ const allItems = ref(props.modelValue);
 const isRoot = props.isRoot;
 
 const thisIsOpen = ref(props.isOpen);
-const childrenOpen = reactive(new Array(props.modelValue.length).fill(false))
 
 </script>
 
@@ -33,7 +32,7 @@ const childrenOpen = reactive(new Array(props.modelValue.length).fill(false))
     <template v-for="(item, index) in allItems" :key="index">
 
       <template v-if="item.children && item.children?.length > 0">
-        <li data-hijos="SI"
+        <li
           :class='{ "vt-TreeSelect__item": true, "vt-TreeSelect__item--open": thisIsOpen, "vt-TreeSelect__item--closed": !thisIsOpen }'>
 
           <div>
@@ -45,8 +44,7 @@ const childrenOpen = reactive(new Array(props.modelValue.length).fill(false))
             <label><input type="checkbox" :cheched="item.selected" />{{ item.title }}</label>
           </div>
 
-          <VtTreeSelect v-model="item.children" :isRoot="false" :isOpen="childrenOpen[index]"
-            :data_x="childrenOpen[index]"></VtTreeSelect>
+          <VtTreeSelect v-model="item.children" :isRoot="false"></VtTreeSelect>
 
         </li>
       </template>
@@ -66,6 +64,10 @@ const childrenOpen = reactive(new Array(props.modelValue.length).fill(false))
 
 <style>
 @import '../assets/global.css';
+
+.vt-TreeSelect {
+  padding-left: 0.2em;
+}
 
 .vt-TreeSelect__item {
   list-style-type: none;
