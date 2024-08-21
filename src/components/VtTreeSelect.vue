@@ -1,5 +1,5 @@
 <script setup>
-import { computed, reactive, ref } from 'vue'
+import { ref } from 'vue'
 
 
 const props = defineProps({
@@ -24,6 +24,23 @@ const isRoot = props.isRoot;
 
 const thisIsOpen = ref(props.isOpen);
 
+const toggleOpen = (currentItem) => {
+  const parent = currentItem.closest('.vt-TreeSelect__item');
+  parent.classList.toggle('vt-TreeSelect__item--open')
+  parent.classList.toggle('vt-TreeSelect__item--closed')
+}
+
+const toggleSelection = (currentItem) => {
+  const isSelected = currentItem.checked;
+  const allDescendants = currentItem.closest("li").querySelectorAll("ul > li input[type=\"checkbox\"]");
+
+  for (const descendant of allDescendants) {
+    if (descendant !== currentItem) {
+      descendant.checked = isSelected
+    }
+  }
+}
+
 </script>
 
 <template>
@@ -36,22 +53,10 @@ const thisIsOpen = ref(props.isOpen);
           :class='{ "vt-TreeSelect__item": true, "vt-TreeSelect__item--open": thisIsOpen, "vt-TreeSelect__item--closed": !thisIsOpen }'>
 
           <div>
-            <span class='vt-TreeSelect__selector' @click.stop="(e) => {
-              const parent = e.target.closest('.vt-TreeSelect__item');
-              parent.classList.toggle('vt-TreeSelect__item--open')
-              parent.classList.toggle('vt-TreeSelect__item--closed')
-            }"></span>
-            <label><input type="checkbox" v-model="item.selected" @change='(e) => {
-              const thisItem = e.target;
-              const isSelected = thisItem.checked;
-              const allDescendants = thisItem.closest("li").querySelectorAll("ul > li input[type=\"checkbox\"]");
-
-              for (const descendant of allDescendants) {
-                if (descendant !== thisItem) {
-                  descendant.checked = isSelected
-                }
-              }
-            }' />{{ item.title }}</label>
+            <span class='vt-TreeSelect__selector' @click.stop="(e) => { toggleOpen(e.target) }"></span>
+            <label>
+              <input type="checkbox" v-model="item.selected" @change='(e) => { toggleSelection(e.target) }' />{{
+                item.title }}</label>
           </div>
 
           <VtTreeSelect v-model="item.children" :isRoot="false"></VtTreeSelect>
