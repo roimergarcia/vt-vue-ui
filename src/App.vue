@@ -93,28 +93,29 @@ const allTreeSelect = [
 
 <template>
 
-  <VtTabs style="height: 420px; width: auto;" :activeIndex="3">
+  <VtTabs style="height: 420px; width: auto;" :activeIndex="4">
 
-    <VtTab title="Double List">
-
+    <VtTab title="Double List" v-if="false">
       <h2>vtDoubleList</h2>
       <VtDoubleList v-model="allItems" style="height: 120px;"></vtDoubleList>
-
     </VtTab>
 
-    <VtTab title="Multi Select">
-
+    <VtTab title="Multi Select" v-if="false">
       <h2>vtMultiselect</h2>
       <VtMultiselect v-model="allItems" style="width: 400px;" />
-
     </VtTab>
 
-    <VtTab title="Audio Recorder">
+    <VtTab title="Audio Recorder" v-if="false">
       <h2>vtAudioRecorder</h2>
       <vtAudioRecorder v-model="allAudio"></vtAudioRecorder>
     </VtTab>
 
-    <VtTab title="Tree Select">
+    <VtTab title="Tree Select" v-if="false">
+      <h2>vtTreeSelect</h2>
+      <VtTreeSelect v-model="allTreeSelect"></VtTreeSelect>
+    </VtTab>
+
+    <VtTab title="Incremental Search">
       <h2>vtTreeSelect</h2>
       <VtTreeSelect v-model="allTreeSelect"></VtTreeSelect>
     </VtTab>

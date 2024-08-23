@@ -27,7 +27,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "server": "node .\\server\\app.js"
+    "server": "node --watch .\\server\\app.js"
   },
   "peerDependencies": {
     "vue": "^3.3.0"

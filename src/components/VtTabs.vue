@@ -1,70 +1,72 @@
 <script setup>
 import { ref } from 'vue'
+import { useSlots } from 'vue'
 
 
 const props = defineProps({
   activeIndex: {
-       type: Number,
-       default: 0
-     },
+    type: Number,
+    default: 0
+  },
 })
 
 let currentIndex = ref(props.activeIndex)//
 
-const selectTab = function(index){
+const selectTab = function (index) {
   currentIndex.value = index;
 }
 
+const slots = useSlots().default()
+
+console.log(slots)
 </script>
 
 <template>
-<div class="vt-tabs">
-  <div class="vt-tabs__header">
-    
-    <template 
-      v-for="(tab, index) in $slots.default()" 
-      :key="index">
-      
-      <div
-        tabindex="0"
-        :class="['vt-tabs__tab', (currentIndex === index) ? 'vt-tabs__tab--active': '']"
-        :data-index="index"
-        @click="()=>{selectTab(index)}"
-        >{{ tab.props.title }} </div>
-      
-    </template>
+  <div class="vt-tabs">
+    <div class="vt-tabs__header">
+
+      <template v-for="(tab, index) in $slots.default()" :key="index">
+
+        <div v-if="!!tab.props" :tabindex="index"
+          :class="['vt-tabs__tab', (currentIndex === index) ? 'vt-tabs__tab--active' : '']" :data-index="index"
+          @click="() => { selectTab(index) }">{{ tab.props ? tab.props.title : '' }}
+          {{ typeof tab }} </div>
+
+      </template>
+
+    </div>
+    <div class="vt-tabs__content">
+
+      <template v-for="(tab, index) in $slots.default()" :key="index">
+        <component :is="tab" :active="currentIndex === index" :index="index"></component>
+      </template>
+
+    </div>
 
   </div>
-  <div class="vt-tabs__content">
-
-    <template v-for="(tab, index) in $slots.default()">
-      <component :is="tab" :active="currentIndex === index" :index="index"></component>
-    </template>
-
-  </div>
-
-</div>
 </template>
 
-<style >
+<style>
 @import '../assets/global.css';
 
-.vt-tabs{
+.vt-tabs {
   display: flex;
   flex-direction: column;
 }
-.vt-tabs__header{
+
+.vt-tabs__header {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   flex: 0 0 auto;
 }
-.vt-tabs__content{
+
+.vt-tabs__content {
   flex: 1 1 100%;
 }
 
 /* HEADERS */
-.vt-tabs__tab{
+.vt-tabs__tab {
   display: inline-block;
   padding: 2px 0.5em;
   margin-right: 2px;
@@ -75,13 +77,13 @@ const selectTab = function(index){
   background-color: var(--vt-bg-color);
   cursor: pointer;
 
-  &.vt-tabs__tab--active{
+  &.vt-tabs__tab--active {
     position: relative;
     border-bottom-color: var(--vt-bg-color);
     z-index: 1;
   }
 
-  &.vt-tabs__tab--active::before{
+  &.vt-tabs__tab--active::before {
     content: " ";
     display: block;
     position: absolute;
@@ -99,19 +101,20 @@ const selectTab = function(index){
 
 }
 
-  /* CONTENT */
-  .vt-tabs__content{
-    margin-top: -1px;
-    background-color: var(--vt-bg-color);
-    border: 1px solid var(--vt-border-color);
-    border-radius: 0 0 var(--vt-border-radius) var(--vt-border-radius);
+/* CONTENT */
+.vt-tabs__content {
+  margin-top: -1px;
+  background-color: var(--vt-bg-color);
+  border: 1px solid var(--vt-border-color);
+  border-radius: 0 0 var(--vt-border-radius) var(--vt-border-radius);
+}
+
+.vt-tabs__body {
+  padding: 0.5em;
+  display: none;
+
+  &.vt-tabs__body--active {
+    display: block;
   }
-  
-  .vt-tabs__body{
-    padding: 0.5em;
-    display: none;
-    &.vt-tabs__body--active{
-      display: block;
-    }
-  }
+}
 </style>
