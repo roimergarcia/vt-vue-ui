@@ -16,9 +16,6 @@ const selectTab = function (index) {
   currentIndex.value = index;
 }
 
-const slots = useSlots().default()
-
-console.log(slots)
 </script>
 
 <template>

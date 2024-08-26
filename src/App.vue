@@ -6,6 +6,8 @@ import VtDoubleList from './components/VtDoubleList.vue';
 import VtMultiselect from './components/vtMultiselect.vue';
 import vtAudioRecorder from './components/VtAudioRecorder.vue';
 import VtTreeSelect from './components/vtTreeSelect.vue';
+import VtIncrementalSearch from './components/VtIncrementalSearch.vue';
+import { ref } from 'vue';
 
 const allItems = [
   new VtListItem('Fresh Apples', 'apple', false),
@@ -89,6 +91,37 @@ const allTreeSelect = [
 ]
   ;
 
+//Incremental search:
+const serverUrl = 'http://localhost:3500/'
+const incrementalSearch__country = ref('')
+const m = async (searchText) => {
+
+  //API Url
+  const url = new URL(serverUrl + 'coutries')
+  const params = new URLSearchParams()
+  params.append('q', searchText)
+  url.search = params
+
+  //data fetch
+  const apiHeaders = Headers()
+  apiHeaders.append('Content-Type', 'application/json"')
+
+  const list = await fetch(url.toString(), {
+    method: 'GET',
+    headers: apiHeaders
+  }).then((res) => {
+
+    if (!Array.isArray(res)) {
+      //There sas an error
+      console.log({ error: res })
+      return []
+    }
+
+    return res
+
+  })
+}
+
 </script>
 
 <template>
@@ -115,12 +148,23 @@ const allTreeSelect = [
       <VtTreeSelect v-model="allTreeSelect"></VtTreeSelect>
     </VtTab>
 
-    <VtTab title="Incremental Search">
-      <h2>vtTreeSelect</h2>
-      <VtTreeSelect v-model="allTreeSelect"></VtTreeSelect>
+    <VtTab title="Incremental Search" class="incremental-test">
+      <h2>VtIncrementalSearch</h2>
+      <label class="incremental__label" for="choose-country">Country: {{ incrementalSearch__country }}</label>
+      <VtIncrementalSearch searchId="choose-country" v-model="incrementalSearch__country"></VtIncrementalSearch>
+      <label for="choose-city">City:</label>
+      <VtIncrementalSearch searchId="choose-city"></VtIncrementalSearch>
     </VtTab>
+
   </VtTabs>
 
 </template>
 
-<style></style>
+<style>
+.incremental-test {
+  label {
+    display: inline-block;
+    padding: 1em 0 0.5em 0;
+  }
+}
+</style>

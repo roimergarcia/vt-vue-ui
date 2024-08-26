@@ -68,5 +68,5 @@ app.get('/city', async (req, res) => {
 
 // Run the server
 app.listen(PORT, () => {
-  console.log(`server listening on port https://localhost:${PORT}`)
+  console.log(`server listening on port http://localhost:${PORT}`)
 })
