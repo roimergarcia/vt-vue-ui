@@ -90,36 +90,79 @@ const allTreeSelect = [
   { selected: true, title: 'Parking Lot' }
 ]
   ;
+//const urlCountryApi = 'http://localhost:3500/country';
 
 //Incremental search:
 const serverUrl = 'http://localhost:3500/'
 const incrementalSearch__country = ref('')
-const m = async (searchText) => {
+const updateCountryList = async (searchText) => {
 
   //API Url
-  const url = new URL(serverUrl + 'coutries')
+  const url = new URL(serverUrl + 'country')
   const params = new URLSearchParams()
   params.append('q', searchText)
   url.search = params
 
   //data fetch
-  const apiHeaders = Headers()
-  apiHeaders.append('Content-Type', 'application/json"')
+  const apiHeaders = new Headers()
 
   const list = await fetch(url.toString(), {
     method: 'GET',
     headers: apiHeaders
-  }).then((res) => {
-
-    if (!Array.isArray(res)) {
-      //There sas an error
-      console.log({ error: res })
-      return []
-    }
-
-    return res
-
   })
+    .then((response) => response.json())
+    .then((response) => {
+
+      if (!Array.isArray(response)) {
+        //There sas an error
+        console.log({ errorNotArray: response })
+        return []
+      }
+
+      return response
+
+    }).catch((err) => {
+      console.log({ er: err.error })
+      return []
+    })
+
+  return list
+
+}
+const updateCityList = async (searchText) => {
+
+  //API Url
+  const url = new URL(serverUrl + 'city')
+  const params = new URLSearchParams()
+  params.append('q', searchText)
+  params.append('country', incrementalSearch__country.value)
+  url.search = params
+
+  //data fetch
+  const apiHeaders = new Headers()
+
+  const list = await fetch(url.toString(), {
+    method: 'GET',
+    headers: apiHeaders
+  })
+    .then((response) => response.json())
+    .then((response) => {
+
+      if (!Array.isArray(response)) {
+        //There sas an error
+        console.log({ errorNotArray: response })
+        return []
+      }
+
+      return response
+
+    }).catch((err) => {
+      console.log({ er: err.error })
+      return []
+    })
+
+  return list
+
 }
 
 </script>
@@ -151,9 +194,11 @@ const m = async (searchText) => {
     <VtTab title="Incremental Search" class="incremental-test">
       <h2>VtIncrementalSearch</h2>
       <label class="incremental__label" for="choose-country">Country: {{ incrementalSearch__country }}</label>
-      <VtIncrementalSearch searchId="choose-country" v-model="incrementalSearch__country"></VtIncrementalSearch>
+      <VtIncrementalSearch searchId="choose-country" v-model="incrementalSearch__country"
+        v-bind:resultFunction="updateCountryList">
+      </VtIncrementalSearch>
       <label for="choose-city">City:</label>
-      <VtIncrementalSearch searchId="choose-city"></VtIncrementalSearch>
+      <VtIncrementalSearch searchId="choose-city" v-bind:resultFunction="updateCityList"></VtIncrementalSearch>
     </VtTab>
 
   </VtTabs>

@@ -24,6 +24,10 @@ app.disable('x-powered-by') // desactiva la cabecera x-powered-by: Express
 //   res.json(movieNames)
 // })
 
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://localhost:5173')
+  next()
+})
 /**
  * Routes: countries list. can receive a "q" param with a query string.
  */
